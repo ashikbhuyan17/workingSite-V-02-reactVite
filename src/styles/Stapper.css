@@ -1,0 +1,123 @@
+.step-row-2 {
+  flex-direction: column;
+  margin-top: 22px;
+  overflow-x: hidden;
+  /* font-size: 2px; */
+  margin-bottom: 22px;
+}
+
+.step-content {
+  overflow: auto;
+  min-width: 500px;
+  width: 100%;
+  -webkit-box-pack: justify !important;
+  justify-content: space-between !important;
+  display: flex !important;
+}
+.cOMntq .steps {
+  display: table-cell;
+  text-align: center;
+  position: relative;
+}
+
+.idNSga .step-title {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-left: 5px;
+  padding: 10px 0px;
+  opacity: 1;
+}
+
+.idNSga {
+  display: flex;
+  flex-direction: column;
+}
+.idNSga .step-title .step-number {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.idNSga .step-title .step-text {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  margin-left: 10px;
+  text-align: start;
+  max-width: 150px;
+  overflow-wrap: break-word;
+}
+
+.idNSga .step-indicators {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+}
+
+.idNSga .step-indicators {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+}
+
+.default-node {
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(159, 157, 157);
+}
+
+.active {
+  border: 2px solid rgb(51, 51, 51);
+  background: rgb(255, 255, 255);
+  color: rgb(51, 51, 51);
+}
+.done {
+  background-color: rgb(51, 51, 51);
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(204, 204, 204);
+}
+
+.iOUMFF {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.iOUMFF span:nth-child(1) {
+  background-color: rgb(102, 102, 102);
+}
+
+.iOUMFF span:nth-child(1) {
+  width: 6px;
+  height: 6px;
+}
+
+.iOUMFF span {
+  margin: 0px 2px;
+  border-radius: 6px;
+}
+
+.iOUMFF span:nth-child(2) {
+  background-color: rgb(204, 204, 204);
+}
+.iOUMFF span:nth-child(2) {
+  width: 50px;
+  height: 6px;
+}
+.iOUMFF span {
+  margin: 0px 2px;
+  border-radius: 6px;
+}

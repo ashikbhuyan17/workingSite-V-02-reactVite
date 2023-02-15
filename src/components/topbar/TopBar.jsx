@@ -1,205 +1,106 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Button, Container, Dropdown, Nav } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const TopBar = () => {
-  const openNavMenuRef = useRef('');
-  const closeNavMenuRef = useRef('');
-  const menuOverlayRef = useRef('');
-  const navMenuRef = useRef('');
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <div className="">
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      <img
+        src="assets/img/logo-image.png"
+        className="img-circle rounded-circle"
+        style={{ height: 40, width: 40, objectFit: 'cover' }}
+        alt="User "
+      />
+    </a>
+  </div>
+));
+
+// eslint-disable-next-line react/display-name
+const CustomMenu = React.forwardRef(
+  ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+    const [value, setValue] = useState('');
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <ul className="list-unstyled m-0">
+          {React.Children.toArray(children).filter(
+            (child) =>
+              !value || child.props.children.toLowerCase().startsWith(value)
+          )}
+        </ul>
+      </div>
+    );
+  }
+);
+
+export default function TopBar({ setSidebarOpen }) {
+  // function handleSignOut() {
+  //   dispatch(signOut());
+  //   navigate('login', { replace: true });
+  // }
+  const handleSideBar = () => {
+    setSidebarOpen((sidebarOpen) => !sidebarOpen);
+  };
+
+  const [user, setUser] = useState();
+
   useEffect(() => {
-    console.log('+++++++++++++++++++++++');
-    const openNavMenu = document.querySelector('.open-nav-menu'),
-      closeNavMenu = document.querySelector('.close-nav-menu'),
-      navMenu = document.querySelector('.nav-menu'),
-      menuOverlay = document.querySelector('.menu-overlay'),
-      mediaSize = 1210;
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUser(user);
+  }, []);
 
-    openNavMenuRef.current.addEventListener('click', toggleNav);
-    closeNavMenuRef.current.addEventListener('click', toggleNav);
-    // close the navMenu by clicking outside
-    menuOverlayRef.current.addEventListener('click', toggleNav);
-
-    function toggleNav() {
-      navMenu.classList.toggle('open');
-      menuOverlay.classList.toggle('active');
-      document.body.classList.toggle('hidden-scrolling');
-    }
-
-    navMenuRef.current.addEventListener('click', (event) => {
-      console.log(
-        '🚀 ~ file: TopBar.jsx:28 ~ navMenuRef.current.addEventListener ~ event',
-        event
-      );
-      if (
-        event.target.hasAttribute('data-toggle') &&
-        window.innerWidth <= mediaSize
-      ) {
-        // prevent default anchor click behavior
-        event.preventDefault();
-        const menuItemHasChildren = event.target.parentElement;
-        // if menuItemHasChildren is already expanded, collapse it
-        if (menuItemHasChildren.classList.contains('active')) {
-          collapseSubMenu();
-        } else {
-          // collapse existing expanded menuItemHasChildren
-          if (navMenu.querySelector('.menu-item-has-children.active')) {
-            collapseSubMenu();
-          }
-          // expand new menuItemHasChildren
-          menuItemHasChildren.classList.add('active');
-          const subMenu = menuItemHasChildren.querySelector('.sub-menu');
-          subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
-        }
-      }
-    });
-    function collapseSubMenu() {
-      navMenu
-        .querySelector('.menu-item-has-children.active .sub-menu')
-        .removeAttribute('style');
-      navMenu
-        .querySelector('.menu-item-has-children.active')
-        .classList.remove('active');
-    }
-    function resizeFix() {
-      // if navMenu is open ,close it
-      if (navMenu.classList.contains('open')) {
-        toggleNav();
-      }
-      // if menuItemHasChildren is expanded , collapse it
-      if (navMenu.querySelector('.menu-item-has-children.active')) {
-        collapseSubMenu();
-      }
-    }
-
-    window.addEventListener('resize', function () {
-      if (this.innerWidth > mediaSize) {
-        resizeFix();
-      }
-    });
-  }, [openNavMenuRef, closeNavMenuRef]);
+  // function openModal() {
+  //   dispatch(printerModalOpen());
+  // }
 
   return (
-    <>
-      <header className="header">
-        <div className="container">
-          <div className="header-main">
-            <div className="logo">
-              <img
-                src="https://www.bringg.com/wp-content/uploads/2021/01/bringg-logo.svg"
-                alt=""
-              />
-            </div>
-            <div className="toggle">
-              <div className="open-nav-menu" ref={openNavMenuRef}>
-                <span></span>
-              </div>
-              <div className="menu-overlay" ref={menuOverlayRef}>
-                {' '}
-              </div>
-            </div>
-            <nav className="nav-menu" ref={navMenuRef}>
-              <div className="close-nav-menu" ref={closeNavMenuRef}>
-                <img src="assets/img/close.svg" alt="close" />
-              </div>
-              <ul className="menu">
-                <li className="menu-item menu-item-has-children">
-                  <a href="#" data-toggle="sub-menu">
-                    Product <i className="plus"></i>
-                  </a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="#">Last Mile Experience</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">Click and Collect</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">Third Party Delivery</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">Fleet & Driver Efficiency</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">Dispatch & Routing</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">Bringg on Salesforce</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className="menu-item">
-                  <a href="#">About</a>
-                </li>
-                <li className="menu-item">
-                  <a href="#">Services</a>
-                </li>
-                <li className="menu-item menu-item-has-children">
-                  <a href="#" data-toggle="sub-menu">
-                    Pages <i className="plus"></i>
-                  </a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="#">page 1</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 2</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 3</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 4</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className="menu-item menu-item-has-children">
-                  <a href="#" data-toggle="sub-menu">
-                    Pages <i className="plus"></i>
-                  </a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="#">page 1</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 2</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 3</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="#">page 4</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className="menu-item">
-                  <a href="#">Blog</a>
-                </li>
-              </ul>
-              {/* <div className="search-icon">
-                  <a href=""><i className="fa-solid fa-magnifying-glass"></i></a>
-               </div>
-   
-               <div className="button-link">
-                  <button>Let's Talk</button>
-               </div>  */}
-            </nav>
-
-            <div className="search-icon">
-              <a>
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </a>
-              <ul className="sub-menu">
-                <input type="text" placeholder="Search Bongo....." />
-              </ul>
-            </div>
-
-            <div className="button-link">
-              <button>Let's Talk</button>
-            </div>
-          </div>
+    <Container fluid>
+      <nav
+        id="navbar_top"
+        className="px-3 navbar navbar-expand-lg bg-white navbar-light bar justify-content-between shadow"
+      >
+        <div className="top-bar nav-item mr-3" onClick={() => handleSideBar()}>
+          <i className="fas fa-bars" />
         </div>
-      </header>
-    </>
-  );
-};
 
-export default TopBar;
+        <Nav className="navbar-nav ml-auto d-flex align-items-center dropdown-menu-right gap-4">
+          {/* <Button onClick={() => dispatch(printerModalOpen())}>printer</Button> */}
+          <Dropdown>
+            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+              Custom toggle
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu as={CustomMenu}>
+              {/* {user ? (
+                <Dropdown.Item eventKey="1">
+                  <span className="fw-bold fs-6"> {user.full_name}</span> <br />
+                  {user.country}
+                </Dropdown.Item>
+              ) : (
+                ""
+              )} */}
+              {/* <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+              <Dropdown.Item eventKey="3">Something else here</Dropdown.Item> */}
+              <Dropdown.Divider />
+              <Dropdown.Item eventKey="4">
+                <i className="fas fa-sign-out-alt mr-2" /> Sign Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav>
+      </nav>
+    </Container>
+  );
+}

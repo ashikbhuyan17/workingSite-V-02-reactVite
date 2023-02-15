@@ -1,0 +1,89 @@
+.card-header {
+  background-color: white;
+  font-weight: bold;
+}
+label {
+  font-weight: bold;
+}
+.contents {
+  font-size: 0.9rem;
+}
+.card {
+  overflow: hideen;
+}
+.impact_sender_option {
+  width: 100%;
+}
+
+.small-card {
+  height: 200px;
+}
+.search_select_box button {
+  background-color: #080342 !important;
+  width: 200px;
+  color: #fff !important;
+  font-size: 1rem;
+}
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+#subCalShow {
+  font-size: 1.2rem;
+}
+/* input filed small */
+.re_size {
+  padding: 0px !important;
+  font-size: 0.8rem !important;
+  text-align: center;
+}
+.filter-option {
+  padding: 0px !important;
+  font-size: 0.7rem !important;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@media screen and (max-height: 450px) {
+}
+
+.chip-container {
+  border: 1px solid rgb(97, 97, 97);
+  max-width: 100%;
+  font-size: 0.81rem;
+  color: rgb(7, 7, 7);
+  height: 32px;
+  border-radius: 16px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chip-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 12px;
+  padding-right: 12px;
+  white-space: nowrap;
+}
+
+.chip-icon {
+  background: transparent;
+  margin-right: 5px;
+  color: rgba(0, 0, 0, 0.26);
+  font-size: 22px;
+  border: 0;
+  padding: 0;
+}
+
+.chip-icon:hover {
+  color: rgba(0, 0, 0, 0.4);
+}
