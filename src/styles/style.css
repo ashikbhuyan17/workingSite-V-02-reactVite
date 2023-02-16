@@ -1,5 +1,5 @@
 body {
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   background-color: #f4f6f9;
   min-height: 100vh;
 }
@@ -111,6 +111,18 @@ table {
 .nav-icon {
   font-size: medium;
   margin-left: -20px;
+}
+
+.sub-nav-icon {
+  margin-left: 20px;
+  font-size: 1rem;
+  color: #818181;
+}
+.sub-nav-name {
+  margin-left: 15px;
+  color: #818181;
+  font-size: 1.1rem;
+  line-height: 36px;
 }
 
 .data {

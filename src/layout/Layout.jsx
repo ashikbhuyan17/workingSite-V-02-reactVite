@@ -8,19 +8,6 @@ import TopBar from '../components/topbar/TopBar';
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // if (width <= 900) => sidebar hide
-  // useMemo(() => {
-  //   const width =
-  //     window.innerWidth ||
-  //     document.documentElement.clientWidth ||
-  //     document.body.clientWidth;
-  //   console.log(".............", width);
-
-  //   if (width <= 900) {
-  //     setSidebarOpen((sidebarOpen) => !sidebarOpen);
-  //   }
-  // }, []);
-
   const [windowWidth, setWindowWidth] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
 

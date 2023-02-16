@@ -32,8 +32,8 @@ function SubMenu({ item }) {
                     }
                     to={item.path}
                   >
-                    <i className={`nav-icon far ${item.icon}`} />
-                    <span className="nav-name">{item.title}</span>
+                    <i className={`sub-nav-icon far ${item.icon}`} />
+                    <span className="sub-nav-name">{item.title}</span>
                   </a>
                 </li>
               ))}
