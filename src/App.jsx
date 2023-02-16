@@ -1,14 +1,17 @@
 import Layout from './layout/Layout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CRUD from './pages/crud-operation-raw/CRUD.jsx';
+import Employee from './pages/manage-employees/employee';
 
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* <Route path="messages" element={<DashboardMessages />} />
-          <Route path="tasks" element={<DashboardTasks />} /> */}
+          <Route path="CRUD" element={<CRUD />} />
+          <Route path="employee" element={<Employee />} />
         </Route>
+        {/* <Route path="about" element={<AboutPage />} /> */}
       </Routes>
     </Router>
   );
