@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function SubMenu({ item }) {
-  console.log('🚀 ~ file: SubMenu.jsx:5 ~ SubMenu ~ item', item);
   const [subnav, setSubnav] = useState(false);
 
   function showSubNav(e) {

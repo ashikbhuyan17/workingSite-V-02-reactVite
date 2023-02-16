@@ -3,7 +3,6 @@ import SidebarData from '../../util/sideBarData';
 import SubMenu from './SubMenu';
 
 function SidebarDy() {
-  console.log('SidebarData', SidebarData);
 
   return (
     <ul
