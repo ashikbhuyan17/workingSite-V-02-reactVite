@@ -5,9 +5,11 @@ import { Employees } from '../../util/mock';
 
 import useToggleModal from '../../hooks/useToggleModal';
 import NewEmployeeModal from './NewEmployeeModal';
+import UpdateEmployee from './UpdateEmployee';
 import { useEffect } from 'react';
 const Employee = () => {
   const [isOpen, setOpen, setClose] = useToggleModal();
+  const [isOpenUpdate, setOpenUpdate, setCloseUpdate] = useToggleModal();
   console.log('Employees', Employees);
 
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -117,7 +119,7 @@ const Employee = () => {
                       <td>{phone}</td>
                       <td>
                         <a
-                          href="#editEmployeeModal"
+                          onClick={() => setOpenUpdate()}
                           className="edit"
                           data-toggle="modal"
                         >
@@ -193,8 +195,9 @@ const Employee = () => {
       </div>
 
       <NewEmployeeModal isOpen={isOpen} setClose={setClose} />
+      <UpdateEmployee isOpen={isOpenUpdate} setClose={setCloseUpdate} />
 
-      <div id="editEmployeeModal" className="modal fade">
+      {/* <div id="editEmployeeModal" className="modal fade">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -237,7 +240,7 @@ const Employee = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div id="deleteEmployeeModal" className="modal fade">
         <div className="modal-dialog">
