@@ -1,4 +1,4 @@
-import Layout from './layout/Layout';
+import Layout from './layouts/Layout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CRUD from './pages/crud-operation-raw/CRUD.jsx';
 import Employee from './pages/manage-employees/Employee';

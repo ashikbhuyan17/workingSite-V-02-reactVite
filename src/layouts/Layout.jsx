@@ -1,8 +1,8 @@
 import { useLayoutEffect, useMemo, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
-import SideBar from '../components/sidebar/SideBar';
-import TopBar from '../components/topbar/TopBar';
+import SideBar from './sidebar/SideBar';
+import TopBar from './topbar/TopBar';
 // import PrinterModal from "../components/PrinterModal";
 
 export default function Layout() {

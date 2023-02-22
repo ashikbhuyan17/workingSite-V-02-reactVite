@@ -1,4 +1,4 @@
-export const Catalogues = [
+export const Employees = [
   {
     id: '01',
     name: 'Thomas Hardy',

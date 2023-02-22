@@ -1,45 +1,87 @@
 import React from 'react';
+import { useState } from 'react';
 import '../../styles/employee.css';
-import { Catalogues } from '../../util/mock';
+import { Employees } from '../../util/mock';
+
+import useToggleModal from '../../hooks/useToggleModal';
+import NewEmployeeModal from './NewEmployeeModal';
+import { useEffect } from 'react';
 const Employee = () => {
+  const [isOpen, setOpen, setClose] = useToggleModal();
+  console.log('Employees', Employees);
+
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    setList(Employees);
+  }, [list]);
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(Employees.map((li) => li.id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+  };
+
+  console.log(isCheck);
+
   return (
     <>
-      <div class="container-fluid">
-        <div class=" table-responsive card shadow fix">
-          <div class="table-wrapper">
-            <div class="table-title">
-              <div class="row">
-                <div class="col-xs-6">
+      <div className="container-fluid">
+        <div className=" table-responsive card shadow fix">
+          <div className="table-wrapper">
+            <div className="table-title">
+              <div className="row">
+                <div className="col-xs-6">
                   <h2>
-                    Manage <b></b>
+                    Manage Employee <b></b>
                   </h2>
                 </div>
-                <div class="col-xs-6">
+                <div className="col-xs-6">
                   <a
-                    href="#addEmployeeModal"
-                    class="btn btn-success"
+                    // href="#addEmployeeModal"
+                    className="btn btn-success"
                     data-toggle="modal"
+                    onClick={() => setOpen()}
                   >
-                    <i class="material-icons">&#xE147;</i>{' '}
+                    <i className="material-icons">&#xE147;</i>{' '}
                     <span>Add New Employee</span>
                   </a>
                   <a
                     href="#deleteEmployeeModal"
-                    class="btn btn-danger"
+                    className="btn btn-danger"
                     data-toggle="modal"
                   >
-                    <i class="material-icons">&#xE15C;</i> <span>Delete</span>
+                    <i className="material-icons">&#xE15C;</i>{' '}
+                    <span>Delete</span>
                   </a>
                 </div>
               </div>
             </div>
-            <table class="table table-striped table-hover table-responsive container-fluid">
+            <table className="table table-striped table-hover table-responsive container-fluid">
               <thead>
                 <tr>
                   <th>
-                    <span class="custom-checkbox">
-                      <input type="checkbox" id="selectAll" />
-                      <label for="selectAll"></label>
+                    <span className="custom-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selectAll"
+                        id="selectAll"
+                        onChange={handleSelectAll}
+                        isChecked={isCheckAll}
+                      />
+                      <label htmlFor="selectAll"></label>
                     </span>
                   </th>
                   <th>Name</th>
@@ -50,136 +92,97 @@ const Employee = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <span class="custom-checkbox">
-                      <input
-                        type="checkbox"
-                        id="checkbox1"
-                        name="options[]"
-                        value="1"
-                        onChange={(e) => {
-                          console.log(e.target.checked);
-                        }}
-                      />
-                      <label for="checkbox1"></label>
-                    </span>
-                  </td>
-                  <td>Thomas Hardy</td>
-                  <td>thomashardy@mail.com</td>
-                  <td>89 Chiaroscuro Rd, Portland, USA</td>
-                  <td>(171) 555-2222</td>
-                  <td>
-                    <a
-                      href="#editEmployeeModal"
-                      class="edit"
-                      data-toggle="modal"
-                    >
-                      <i
-                        class="material-icons"
-                        data-toggle="tooltip"
-                        title="Edit"
-                      >
-                        &#xE254;
-                      </i>
-                    </a>
-                    <a
-                      href="#deleteEmployeeModal"
-                      class="delete"
-                      data-toggle="modal"
-                    >
-                      <i
-                        class="material-icons"
-                        data-toggle="tooltip"
-                        title="Delete"
-                      >
-                        &#xE872;
-                      </i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="custom-checkbox">
-                      <input
-                        type="checkbox"
-                        id="checkbox2"
-                        name="options[]"
-                        value="1"
-                      />
-                      <label for="checkbox2"></label>
-                    </span>
-                  </td>
-                  <td>Dominique Perrier</td>
-                  <td>dominiqueperrier@mail.com</td>
-                  <td>Obere Str. 57, Berlin, Germany</td>
-                  <td>(313) 555-5735</td>
-                  <td>
-                    <a
-                      href="#editEmployeeModal"
-                      class="edit"
-                      data-toggle="modal"
-                    >
-                      <i
-                        class="material-icons"
-                        data-toggle="tooltip"
-                        title="Edit"
-                      >
-                        &#xE254;
-                      </i>
-                    </a>
-                    <a
-                      href="#deleteEmployeeModal"
-                      class="delete"
-                      data-toggle="modal"
-                    >
-                      <i
-                        class="material-icons"
-                        data-toggle="tooltip"
-                        title="Delete"
-                      >
-                        &#xE872;
-                      </i>
-                    </a>
-                  </td>
-                </tr>
+                {Employees.map(({ id, name, email, address, phone }) => {
+                  return (
+                    <tr key={id}>
+                      <td>
+                        <span className="custom-checkbox">
+                          <input
+                            // onChange={(e) => {
+                            //   console.log(e.target.checked);
+                            // }}
+                            key={id}
+                            type="checkbox"
+                            name={name}
+                            id={id}
+                            onChange={handleClick}
+                            checked={isCheck.includes(id)}
+                          />
+                          <label for="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>{name}</td>
+                      <td>{email}</td>
+                      <td>{address}</td>
+                      <td>{phone}</td>
+                      <td>
+                        <a
+                          href="#editEmployeeModal"
+                          className="edit"
+                          data-toggle="modal"
+                        >
+                          <i
+                            className="material-icons"
+                            data-toggle="tooltip"
+                            title="Edit"
+                          >
+                            &#xE254;
+                          </i>
+                        </a>
+                        <a
+                          href="#deleteEmployeeModal"
+                          className="delete"
+                          data-toggle="modal"
+                        >
+                          <i
+                            className="material-icons"
+                            data-toggle="tooltip"
+                            title="Delete"
+                          >
+                            &#xE872;
+                          </i>
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
-            <div class="clearfix">
-              <div class="hint-text">
+            <div className="clearfix">
+              <div className="hint-text">
                 Showing <b>5</b> out of <b>25</b> entries
               </div>
-              <ul class="pagination">
-                <li class="page-item disabled">
+              <ul className="pagination">
+                <li className="page-item disabled">
                   <a href="#">Previous</a>
                 </li>
-                <li class="page-item">
-                  <a href="#" class="page-link">
+                <li className="page-item">
+                  <a href="#" className="page-link">
                     1
                   </a>
                 </li>
-                <li class="page-item">
-                  <a href="#" class="page-link">
+                <li className="page-item">
+                  <a href="#" className="page-link">
                     2
                   </a>
                 </li>
-                <li class="page-item active">
-                  <a href="#" class="page-link">
+                <li className="page-item active">
+                  <a href="#" className="page-link">
                     3
                   </a>
                 </li>
-                <li class="page-item">
-                  <a href="#" class="page-link">
+                <li className="page-item">
+                  <a href="#" className="page-link">
                     4
                   </a>
                 </li>
-                <li class="page-item">
-                  <a href="#" class="page-link">
+                <li className="page-item">
+                  <a href="#" className="page-link">
                     5
                   </a>
                 </li>
-                <li class="page-item">
-                  <a href="#" class="page-link">
+                <li className="page-item">
+                  <a href="#" className="page-link">
                     Next
                   </a>
                 </li>
@@ -189,124 +192,81 @@ const Employee = () => {
         </div>
       </div>
 
-      <div id="addEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add Employee</h4>
+      <NewEmployeeModal isOpen={isOpen} setClose={setClose} />
+
+      <div id="editEmployeeModal" className="modal fade">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Edit Employee</h4>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-hidden="true"
               >
                 &times;
               </button>
             </div>
-            <div class="modal-body">
-              <div class="form-group">
+            <div className="modal-body">
+              <div className="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" required />
+                <input type="text" className="form-control" required />
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" required />
+                <input type="email" className="form-control" required />
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Address</label>
-                <textarea class="form-control" required></textarea>
+                <textarea className="form-control" required></textarea>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Phone</label>
-                <input type="text" class="form-control" required />
+                <input type="text" className="form-control" required />
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <input
                 type="button"
-                class="btn btn-default"
+                className="btn btn-default"
                 data-dismiss="modal"
                 value="Cancel"
               />
-              <input type="submit" class="btn btn-success" value="Add" />
+              <input type="submit" className="btn btn-info" value="Save" />
             </div>
           </div>
         </div>
       </div>
 
-      <div id="editEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Employee</h4>
+      <div id="deleteEmployeeModal" className="modal fade">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Delete Employee</h4>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-hidden="true"
               >
                 &times;
               </button>
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" required />
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" required />
-              </div>
-              <div class="form-group">
-                <label>Address</label>
-                <textarea class="form-control" required></textarea>
-              </div>
-              <div class="form-group">
-                <label>Phone</label>
-                <input type="text" class="form-control" required />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
-              <input type="submit" class="btn btn-info" value="Save" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="deleteEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Delete Employee</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Are you sure you want to delete these Records?</p>
-              <p class="text-warning">
+              <p className="text-warning">
                 <small>This action cannot be undone.</small>
               </p>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <input
                 type="button"
-                class="btn btn-default"
+                className="btn btn-default"
                 data-dismiss="modal"
                 value="Cancel"
               />
-              <input type="submit" class="btn btn-danger" value="Delete" />
+              <input type="submit" className="btn btn-danger" value="Delete" />
             </div>
           </div>
         </div>
