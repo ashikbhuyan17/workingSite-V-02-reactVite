@@ -9,6 +9,7 @@ const UpdateEmployee = ({ isOpen, setClose }) => {
       '🚀 ~ file: NewEmployeeModal.jsx:8 ~ NewEmployeeModal ~ data:',
       data
     );
+    setClose();
   };
   return (
     <>

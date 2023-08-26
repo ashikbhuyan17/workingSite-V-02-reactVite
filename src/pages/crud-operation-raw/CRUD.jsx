@@ -1,8 +1,32 @@
 import React from 'react';
 
 const CRUD = () => {
+  const [focused, setFocused] = React.useState({
+    focus: false,
+    nameData: '',
+  });
+  console.log('🚀 ~ file: CRUD.jsx:5 ~ CRUD ~ focused:', focused);
+  const onFocus = () => setFocused({ ...focused, focus: true });
+  const onBlur = () => setFocused({ ...focused, focus: true });
+  const inputError = () => {
+    if (!focused.focus && focused.nameData == '') {
+      console.log('sjlhsdjh', focused.focus, focused.nameData == '');
+
+      return <p style={{ color: 'red' }}>please fill up form </p>;
+    }
+  };
   return (
     <>
+      <div>
+        <input
+          type="text"
+          placeholder="name"
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChange={(e) => setFocused({ ...focused, nameData: e.target.value })}
+        />
+        {inputError()}
+      </div>
       <div className="container-fluid">
         <div className="container-fluid mt-5">
           <div className="card shadow fix">

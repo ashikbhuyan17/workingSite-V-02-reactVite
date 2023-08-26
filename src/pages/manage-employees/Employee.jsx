@@ -7,10 +7,16 @@ import useToggleModal from '../../hooks/useToggleModal';
 import NewEmployeeModal from './NewEmployeeModal';
 import UpdateEmployee from './UpdateEmployee';
 import { useEffect } from 'react';
+import DeleteEmployee from './DeleteEmployee';
+
 const Employee = () => {
+  const [updateItem, setUpdateItem] = useState('');
+  const [deleteItem, setDeleteItem] = useState('');
+
   const [isOpen, setOpen, setClose] = useToggleModal();
   const [isOpenUpdate, setOpenUpdate, setCloseUpdate] = useToggleModal();
-  console.log('Employees', Employees);
+  const [isDelete, setOpenDelete, setCloseDelete] = useToggleModal();
+  console.log('🚀 ~ file: Employee.jsx:19 ~ Employee ~ isDelete:', isDelete);
 
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -36,7 +42,16 @@ const Employee = () => {
     }
   };
 
-  console.log(isCheck);
+  const handleOpenUpdate = (item) => {
+    setOpenUpdate();
+    setUpdateItem(item);
+    console.log('isUpdate', isOpenUpdate);
+  };
+  const handleDelete = (id) => {
+    // console.log('isDelete', isDelete);
+    setOpenDelete();
+    setDeleteItem(id);
+  };
 
   return (
     <>
@@ -119,7 +134,15 @@ const Employee = () => {
                       <td>{phone}</td>
                       <td>
                         <a
-                          onClick={() => setOpenUpdate()}
+                          onClick={() =>
+                            handleOpenUpdate({
+                              id,
+                              name,
+                              email,
+                              address,
+                              phone,
+                            })
+                          }
                           className="edit"
                           data-toggle="modal"
                         >
@@ -131,10 +154,10 @@ const Employee = () => {
                             &#xE254;
                           </i>
                         </a>
-                        <a
-                          href="#deleteEmployeeModal"
+                        {/* <a
                           className="delete"
                           data-toggle="modal"
+                          onClick={() => handleDelete(id)}
                         >
                           <i
                             className="material-icons"
@@ -143,7 +166,13 @@ const Employee = () => {
                           >
                             &#xE872;
                           </i>
-                        </a>
+                        </a> */}
+                        <DeleteEmployee
+                          isDelete={isDelete}
+                          setCloseDelete={setCloseDelete}
+                          id={deleteItem}
+                          setOpenDelete={setOpenDelete}
+                        />
                       </td>
                     </tr>
                   );
@@ -196,84 +225,11 @@ const Employee = () => {
 
       <NewEmployeeModal isOpen={isOpen} setClose={setClose} />
       <UpdateEmployee isOpen={isOpenUpdate} setClose={setCloseUpdate} />
-
-      {/* <div id="editEmployeeModal" className="modal fade">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Edit Employee</h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
-                &times;
-              </button>
-            </div>
-            <div className="modal-body">
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" className="form-control" required />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" className="form-control" required />
-              </div>
-              <div className="form-group">
-                <label>Address</label>
-                <textarea className="form-control" required></textarea>
-              </div>
-              <div className="form-group">
-                <label>Phone</label>
-                <input type="text" className="form-control" required />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <input
-                type="button"
-                className="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
-              <input type="submit" className="btn btn-info" value="Save" />
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      <div id="deleteEmployeeModal" className="modal fade">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Delete Employee</h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
-                &times;
-              </button>
-            </div>
-            <div className="modal-body">
-              <p>Are you sure you want to delete these Records?</p>
-              <p className="text-warning">
-                <small>This action cannot be undone.</small>
-              </p>
-            </div>
-            <div className="modal-footer">
-              <input
-                type="button"
-                className="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
-              <input type="submit" className="btn btn-danger" value="Delete" />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* <DeleteEmployee
+        isDelete={isDelete}
+        setCloseDelete={setCloseDelete}
+        id={deleteItem}
+      /> */}
     </>
   );
 };
